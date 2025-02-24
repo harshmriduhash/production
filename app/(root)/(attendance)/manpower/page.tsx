@@ -42,11 +42,10 @@ const FormSchema = z.object({
   }),
 });
 
-
 export default function ManpowerTable() {
   const [manpower, setManpower] = useState<any | null>(null);
   const [loading, setLoading] = useState(false);
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -78,20 +77,15 @@ export default function ManpowerTable() {
     return now;
   });
 
-
   if (date === undefined || date === null) {
     useEffect(() => {
-      fetchManpower(new Date().toISOString())
-    }, [date])
-
+      fetchManpower(new Date().toISOString());
+    }, [date]);
   } else {
     useEffect(() => {
-      fetchManpower(date.toISOString())
-    }, [date])
+      fetchManpower(date.toISOString());
+    }, [date]);
   }
-
-
-
 
   return (
     <div className="grid grid-cols-2 max-w-2xl mx-auto">
@@ -105,73 +99,112 @@ export default function ManpowerTable() {
       </div>
 
       <div className="border mt-4">
-        {loading ? <div className="p-4 text-center flex flex-col justify-center items-center h-full">Loading...</div> :
-
-          manpower && manpower.length > 0 ? (
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-gray-100">
-                  <TableHead>Field</TableHead>
-                  <TableHead className="text-center">Value</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {manpower.map((item: any, index: number) => (
-                  <React.Fragment key={index}>
-                    <TableRow>
-                      <TableCell className="text-left pr-4 font-semibold">Date</TableCell>
-                      <TableCell className="text-center">
-                        {new Intl.DateTimeFormat("en-GB").format(new Date(item.date))}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="text-left pr-4 font-semibold">Operator</TableCell>
-                      <TableCell className="text-center">{item.operator}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="text-left pr-4 font-semibold">Helper</TableCell>
-                      <TableCell className="text-center">{item.helper}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="text-left pr-4 font-semibold">Iron Input</TableCell>
-                      <TableCell className="text-center">{item.ironInput}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="text-left pr-4 font-semibold">Cutting</TableCell>
-                      <TableCell className="text-center">{item.cutting}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="text-left pr-4 font-semibold">Finishing</TableCell>
-                      <TableCell className="text-center">{item.finishing}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="text-left pr-4 font-semibold">Quality</TableCell>
-                      <TableCell className="text-center">{item.quality}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="text-left pr-4 font-semibold">Staff</TableCell>
-                      <TableCell className="text-center">{item.staff}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="text-left pr-4 font-semibold">Cleaner</TableCell>
-                      <TableCell className="text-center">{item.cleaner}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="text-left pr-4 font-semibold">Loader</TableCell>
-                      <TableCell className="text-center">{item.loader}</TableCell>
-                    </TableRow>
-                    <TableRow className="bg-gray-100">
-                      <TableCell className="text-left pr-4 font-semibold py-4">Total</TableCell>
-                      <TableCell className="text-center">{item.total}</TableCell>
-                    </TableRow>
-                  </React.Fragment>
-                ))}
-              </TableBody>
-            </Table>
-
-          ) : (
-            <div className="p-4 text-center flex flex-col justify-center items-center h-full">No data available. Search by date.</div>
-          )}
+        {loading ? (
+          <div className="p-4 text-center flex flex-col justify-center items-center h-full">
+            Loading...
+          </div>
+        ) : manpower && manpower.length > 0 ? (
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-gray-100">
+                <TableHead>Field</TableHead>
+                <TableHead className="text-center">Value</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {manpower.map((item: any, index: number) => (
+                <React.Fragment key={index}>
+                  <TableRow>
+                    <TableCell className="text-left pr-4 font-semibold">
+                      Date
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {new Intl.DateTimeFormat("en-GB").format(
+                        new Date(item.date)
+                      )}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="text-left pr-4 font-semibold">
+                      Operator
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {item.operator}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="text-left pr-4 font-semibold">
+                      Helper
+                    </TableCell>
+                    <TableCell className="text-center">{item.helper}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="text-left pr-4 font-semibold">
+                      Iron Input
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {item.ironInput}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="text-left pr-4 font-semibold">
+                      Cutting
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {item.cutting}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="text-left pr-4 font-semibold">
+                      Finishing
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {item.finishing}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="text-left pr-4 font-semibold">
+                      Quality
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {item.quality}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="text-left pr-4 font-semibold">
+                      Staff
+                    </TableCell>
+                    <TableCell className="text-center">{item.staff}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="text-left pr-4 font-semibold">
+                      Cleaner
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {item.cleaner}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="text-left pr-4 font-semibold">
+                      Loader
+                    </TableCell>
+                    <TableCell className="text-center">{item.loader}</TableCell>
+                  </TableRow>
+                  <TableRow className="bg-gray-100">
+                    <TableCell className="text-left pr-4 font-semibold py-4">
+                      Total
+                    </TableCell>
+                    <TableCell className="text-center">{item.total}</TableCell>
+                  </TableRow>
+                </React.Fragment>
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <div className="p-4 text-center flex flex-col justify-center items-center h-full">
+            No data available. Search by date.
+          </div>
+        )}
       </div>
     </div>
   );
