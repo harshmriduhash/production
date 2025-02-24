@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
 
-import { AppSidebar } from "@/components/layout/app-sidebar"
+import { AppSidebar } from "@/components/layout/app-sidebar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,13 +11,13 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
+} from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 const roboto = localFont({
   src: "./fonts/Roboto-VariableFont_wdth,wght.ttf",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   description: "Production Management",
   icons: {
     icon: "/title_logo.png",
-  }
+  },
 };
 
 export default function RootLayout({
@@ -41,7 +41,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${roboto.variable} antialiased font-[family-name:var(--font-geist-sans)]`} >
+      <body
+        className={`${roboto.variable} antialiased font-[family-name:var(--font-geist-sans)]`}
+      >
         <SidebarProvider>
           <AppSidebar />
           <SidebarInset>
@@ -65,9 +67,7 @@ export default function RootLayout({
               </div>
             </header>
             <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-              <main>
-                {children}
-              </main>
+              <main>{children}</main>
               <Toaster />
             </div>
           </SidebarInset>
