@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,28 +12,50 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { useToast } from "@/hooks/use-toast"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 
 // Define the schema
 const FormSchema = z.object({
   date: z.string().nonempty("Date is required."),
-  operatorGeneral: z.number({ invalid_type_error: "Must be a number." }).min(0, { message: "Value must be at least 0." }),
-  operatorOvertime: z.number({ invalid_type_error: "Must be a number." }).min(0, { message: "Value must be at least 0." }),
-  helperGeneral: z.number({ invalid_type_error: "Must be a number." }).min(0, { message: "Value must be at least 0." }),
-  helperOvertime: z.number({ invalid_type_error: "Must be a number." }).min(0, { message: "Value must be at least 0." }),
-  cuttingGeneral: z.number({ invalid_type_error: "Must be a number." }).min(0, { message: "Value must be at least 0." }),
-  cuttingOvertime: z.number({ invalid_type_error: "Must be a number." }).min(0, { message: "Value must be at least 0." }),
-  finishingGeneral: z.number({ invalid_type_error: "Must be a number." }).min(0, { message: "Value must be at least 0." }),
-  finishingOvertime: z.number({ invalid_type_error: "Must be a number." }).min(0, { message: "Value must be at least 0." }),
-  qualityGeneral: z.number({ invalid_type_error: "Must be a number." }).min(0, { message: "Value must be at least 0." }),
-  qualityOvertime: z.number({ invalid_type_error: "Must be a number." }).min(0, { message: "Value must be at least 0." }),
-  staff: z.number({ invalid_type_error: "Must be a number." }).min(0, { message: "Value must be at least 0." }),
-})
+  operatorGeneral: z
+    .number({ invalid_type_error: "Must be a number." })
+    .min(0, { message: "Value must be at least 0." }),
+  operatorOvertime: z
+    .number({ invalid_type_error: "Must be a number." })
+    .min(0, { message: "Value must be at least 0." }),
+  helperGeneral: z
+    .number({ invalid_type_error: "Must be a number." })
+    .min(0, { message: "Value must be at least 0." }),
+  helperOvertime: z
+    .number({ invalid_type_error: "Must be a number." })
+    .min(0, { message: "Value must be at least 0." }),
+  cuttingGeneral: z
+    .number({ invalid_type_error: "Must be a number." })
+    .min(0, { message: "Value must be at least 0." }),
+  cuttingOvertime: z
+    .number({ invalid_type_error: "Must be a number." })
+    .min(0, { message: "Value must be at least 0." }),
+  finishingGeneral: z
+    .number({ invalid_type_error: "Must be a number." })
+    .min(0, { message: "Value must be at least 0." }),
+  finishingOvertime: z
+    .number({ invalid_type_error: "Must be a number." })
+    .min(0, { message: "Value must be at least 0." }),
+  qualityGeneral: z
+    .number({ invalid_type_error: "Must be a number." })
+    .min(0, { message: "Value must be at least 0." }),
+  qualityOvertime: z
+    .number({ invalid_type_error: "Must be a number." })
+    .min(0, { message: "Value must be at least 0." }),
+  staff: z
+    .number({ invalid_type_error: "Must be a number." })
+    .min(0, { message: "Value must be at least 0." }),
+});
 
 export default function AttendanceForm() {
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -51,7 +73,7 @@ export default function AttendanceForm() {
       qualityOvertime: 0,
       staff: 0,
     },
-  })
+  });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     toast({
@@ -61,8 +83,8 @@ export default function AttendanceForm() {
           <code className="text-white">{JSON.stringify(data, null, 2)}</code>
         </pre>
       ),
-    })
-    form.reset()
+    });
+    form.reset();
   }
 
   return (
@@ -100,7 +122,9 @@ export default function AttendanceForm() {
                     <Input
                       type="number"
                       {...field}
-                      onChange={(e) => field.onChange(parseInt(e.target.value, 10) || 0)}
+                      onChange={(e) =>
+                        field.onChange(parseInt(e.target.value, 10) || 0)
+                      }
                     />
                   </FormControl>
                   <FormMessage />
@@ -117,7 +141,9 @@ export default function AttendanceForm() {
                     <Input
                       type="number"
                       {...field}
-                      onChange={(e) => field.onChange(parseInt(e.target.value, 10) || 0)}
+                      onChange={(e) =>
+                        field.onChange(parseInt(e.target.value, 10) || 0)
+                      }
                     />
                   </FormControl>
                   <FormMessage />
@@ -136,7 +162,9 @@ export default function AttendanceForm() {
                     <Input
                       type="number"
                       {...field}
-                      onChange={(e) => field.onChange(parseInt(e.target.value, 10) || 0)}
+                      onChange={(e) =>
+                        field.onChange(parseInt(e.target.value, 10) || 0)
+                      }
                     />
                   </FormControl>
                   <FormMessage />
@@ -153,7 +181,9 @@ export default function AttendanceForm() {
                     <Input
                       type="number"
                       {...field}
-                      onChange={(e) => field.onChange(parseInt(e.target.value, 10) || 0)}
+                      onChange={(e) =>
+                        field.onChange(parseInt(e.target.value, 10) || 0)
+                      }
                     />
                   </FormControl>
                   <FormMessage />
@@ -172,7 +202,9 @@ export default function AttendanceForm() {
                     <Input
                       type="number"
                       {...field}
-                      onChange={(e) => field.onChange(parseInt(e.target.value, 10) || 0)}
+                      onChange={(e) =>
+                        field.onChange(parseInt(e.target.value, 10) || 0)
+                      }
                     />
                   </FormControl>
                   <FormMessage />
@@ -189,7 +221,9 @@ export default function AttendanceForm() {
                     <Input
                       type="number"
                       {...field}
-                      onChange={(e) => field.onChange(parseInt(e.target.value, 10) || 0)}
+                      onChange={(e) =>
+                        field.onChange(parseInt(e.target.value, 10) || 0)
+                      }
                     />
                   </FormControl>
                   <FormMessage />
@@ -208,7 +242,9 @@ export default function AttendanceForm() {
                     <Input
                       type="number"
                       {...field}
-                      onChange={(e) => field.onChange(parseInt(e.target.value, 10) || 0)}
+                      onChange={(e) =>
+                        field.onChange(parseInt(e.target.value, 10) || 0)
+                      }
                     />
                   </FormControl>
                   <FormMessage />
@@ -225,7 +261,9 @@ export default function AttendanceForm() {
                     <Input
                       type="number"
                       {...field}
-                      onChange={(e) => field.onChange(parseInt(e.target.value, 10) || 0)}
+                      onChange={(e) =>
+                        field.onChange(parseInt(e.target.value, 10) || 0)
+                      }
                     />
                   </FormControl>
                   <FormMessage />
@@ -244,7 +282,9 @@ export default function AttendanceForm() {
                     <Input
                       type="number"
                       {...field}
-                      onChange={(e) => field.onChange(parseInt(e.target.value, 10) || 0)}
+                      onChange={(e) =>
+                        field.onChange(parseInt(e.target.value, 10) || 0)
+                      }
                     />
                   </FormControl>
                   <FormMessage />
@@ -261,7 +301,9 @@ export default function AttendanceForm() {
                     <Input
                       type="number"
                       {...field}
-                      onChange={(e) => field.onChange(parseInt(e.target.value, 10) || 0)}
+                      onChange={(e) =>
+                        field.onChange(parseInt(e.target.value, 10) || 0)
+                      }
                     />
                   </FormControl>
                   <FormMessage />
@@ -280,7 +322,9 @@ export default function AttendanceForm() {
                     <Input
                       type="number"
                       {...field}
-                      onChange={(e) => field.onChange(parseInt(e.target.value, 10) || 0)}
+                      onChange={(e) =>
+                        field.onChange(parseInt(e.target.value, 10) || 0)
+                      }
                     />
                   </FormControl>
                   <FormMessage />
@@ -294,5 +338,5 @@ export default function AttendanceForm() {
         </form>
       </Form>
     </div>
-  )
+  );
 }
