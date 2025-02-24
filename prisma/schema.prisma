@@ -1,0 +1,151 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL") // Add your MongoDB connection string in .env
+}
+
+model Attendance {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  workerId  String
+  date      DateTime
+  status    String // e.g., "Present", "Absent", etc.
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DailyExpense {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  date              DateTime @unique
+  operatorGeneral   Int      @default(0)
+  operatorOvertime  Int      @default(0)
+  helperGeneral     Int      @default(0)
+  helperOvertime    Int      @default(0)
+  cuttingGeneral    Int      @default(0)
+  cuttingOvertime   Int      @default(0)
+  finishingGeneral  Int      @default(0)
+  finishingOvertime Int      @default(0)
+  qualityGeneral    Int      @default(0)
+  qualityOvertime   Int      @default(0)
+  staff             Int      @default(0)
+  cleaner           Int      @default(0)
+  loader            Int      @default(0)
+  ironInput         Int      @default(0)
+  totalExpense      Float    @default(0.0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model DailyExpenseRate {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  date              DateTime @unique @default(now())
+  operatorGeneral   Int      @default(0)
+  operatorOvertime  Int      @default(0)
+  helperGeneral     Int      @default(0)
+  helperOvertime    Int      @default(0)
+  cuttingGeneral    Int      @default(0)
+  cuttingOvertime   Int      @default(0)
+  finishingGeneral  Int      @default(0)
+  finishingOvertime Int      @default(0)
+  qualityGeneral    Int      @default(0)
+  qualityOvertime   Int      @default(0)
+  staff             Int      @default(0)
+  cleaner           Int      @default(0)
+  loader            Int      @default(0)
+  ironInput         Int      @default(0)
+  totalExpense      Float    @default(0.0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+// Manpower
+model Manpower {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  date      DateTime @unique @default(now())
+  staff     Int      @default(0)
+  operator  Int      @default(0)
+  helper    Int      @default(0)
+  ironInput Int      @default(0)
+  cutting   Int      @default(0)
+  finishing Int      @default(0)
+  quality   Int      @default(0)
+  cleaner   Int      @default(0)
+  loader    Int      @default(0)
+  total     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// schema.prisma
+
+model ProductionOrder {
+  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  programCode      String
+  buyer            String
+  item             String
+  styleNo          String             @unique
+  orderQty         Int
+  percentage       Float
+  unitPrice        Float
+  status           OrderStatus
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  ProductionReport ProductionReport[]
+
+  @@index([buyer])
+  @@index([status])
+}
+
+model ProductionReport {
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
+  productionOrder   ProductionOrder @relation(fields: [productionOrderId], references: [id])
+  productionOrderId String          @db.ObjectId
+  lineNo            Int
+  dailyProduction   Int
+  totalPrice        Float
+  dollar            Float
+  totalAmount       Float
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@index([productionOrderId])
+}
+
+enum OrderStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model ProfitLoss {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  date      DateTime @default(now()) // Date of the entry
+  earning   Float // Total earnings for the date
+  expense   Float // Total expenses for the date
+  variation Float // Calculated as (earning - expense)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Cashbook {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  date        DateTime
+  description String
+  amount      Float
+  type        String // e.g., "Credit" or "Debit"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Expense {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  date        DateTime
+  category    String
+  amount      Float
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
