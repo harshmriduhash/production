@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import {
   Select,
@@ -11,8 +11,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Button } from "@/components/ui/button"
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -20,23 +20,27 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { useToast } from "@/hooks/use-toast"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 
 // Define the schema
 const FormSchema = z.object({
-  lineNo: z.number({ invalid_type_error: "Line No must be a number." }).min(1, { message: "Line No is required." }),
+  lineNo: z
+    .number({ invalid_type_error: "Line No must be a number." })
+    .min(1, { message: "Line No is required." }),
   productionOrderId: z.string().nonempty("Production Order ID is required."),
-  dailyProduction: z.number({ invalid_type_error: "Daily Production must be a number." }).min(1, {
-    message: "Daily Production must be greater than 0.",
-  }),
-})
+  dailyProduction: z
+    .number({ invalid_type_error: "Daily Production must be a number." })
+    .min(1, {
+      message: "Daily Production must be greater than 0.",
+    }),
+});
 
 export default function ProductionReportForm() {
-  const { toast } = useToast()
-  const [orderOptions, setOrderOptions] = useState([])
-  const [entries, setEntries] = useState<any>([])
+  const { toast } = useToast();
+  const [orderOptions, setOrderOptions] = useState([]);
+  const [entries, setEntries] = useState<any>([]);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -45,31 +49,31 @@ export default function ProductionReportForm() {
       productionOrderId: "",
       dailyProduction: 0,
     },
-  })
+  });
 
   // Fetch production order data
   useEffect(() => {
     fetch("/api/production-order/status?status=IN_PROGRESS")
       .then((res) => res.json())
       .then((data) => {
-        setOrderOptions(data)
+        setOrderOptions(data);
       })
       .catch(() => {
         toast({
           title: "Error",
-          description: "Failed to fetch production orders."
-        })
-      })
-  }, [])
+          description: "Failed to fetch production orders.",
+        });
+      });
+  }, []);
 
   // Handle form submission
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    setEntries((prev:any) => [...prev, data])
+    setEntries((prev: any) => [...prev, data]);
     toast({
       title: "Entry Added",
       description: "Your production report has been added successfully.",
-    })
-    form.reset()
+    });
+    form.reset();
   }
 
   return (
@@ -91,7 +95,9 @@ export default function ProductionReportForm() {
                         type="number"
                         placeholder="Enter line number"
                         {...field}
-                        onChange={(e) => field.onChange(parseInt(e.target.value, 10) || 0)}
+                        onChange={(e) =>
+                          field.onChange(parseInt(e.target.value, 10) || 0)
+                        }
                       />
                     </FormControl>
                     <FormMessage />
@@ -104,14 +110,17 @@ export default function ProductionReportForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Production Order ID</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select a production order" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {orderOptions.map((order:any) => (
+                        {orderOptions.map((order: any) => (
                           <SelectItem key={order.id} value={order.id}>
                             {order.styleNo} {/* Customize if needed */}
                           </SelectItem>
@@ -133,7 +142,9 @@ export default function ProductionReportForm() {
                         type="number"
                         placeholder="Enter daily production"
                         {...field}
-                        onChange={(e) => field.onChange(parseInt(e.target.value, 10) || 0)}
+                        onChange={(e) =>
+                          field.onChange(parseInt(e.target.value, 10) || 0)
+                        }
                       />
                     </FormControl>
                     <FormMessage />
@@ -155,22 +166,35 @@ export default function ProductionReportForm() {
               <thead className="bg-slate-200">
                 <tr>
                   <th className="border border-slate-600 px-4 py-2">Line No</th>
-                  <th className="border border-slate-600 px-4 py-2">Production Order ID</th>
-                  <th className="border border-slate-600 px-4 py-2">Daily Production</th>
+                  <th className="border border-slate-600 px-4 py-2">
+                    Production Order ID
+                  </th>
+                  <th className="border border-slate-600 px-4 py-2">
+                    Daily Production
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {entries.length > 0 ? (
-                  entries.map((entry:any, index:any) => (
+                  entries.map((entry: any, index: any) => (
                     <tr key={index}>
-                      <td className="border border-slate-600 px-4 py-2">{entry.lineNo}</td>
-                      <td className="border border-slate-600 px-4 py-2">{entry.productionOrderId}</td>
-                      <td className="border border-slate-600 px-4 py-2">{entry.dailyProduction}</td>
+                      <td className="border border-slate-600 px-4 py-2">
+                        {entry.lineNo}
+                      </td>
+                      <td className="border border-slate-600 px-4 py-2">
+                        {entry.productionOrderId}
+                      </td>
+                      <td className="border border-slate-600 px-4 py-2">
+                        {entry.dailyProduction}
+                      </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={3} className="text-center border border-slate-600 px-4 py-2">
+                    <td
+                      colSpan={3}
+                      className="text-center border border-slate-600 px-4 py-2"
+                    >
                       No entries available.
                     </td>
                   </tr>
@@ -181,5 +205,5 @@ export default function ProductionReportForm() {
         </div>
       </div>
     </div>
-  )
+  );
 }
