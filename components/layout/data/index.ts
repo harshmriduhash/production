@@ -9,9 +9,7 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
-} from "lucide-react"
-
-
+} from "lucide-react";
 
 export const data = {
   user: {
@@ -163,4 +161,4 @@ export const data = {
       icon: Map,
     },
   ],
-}
+};
